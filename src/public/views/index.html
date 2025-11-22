@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Nunjucks</title>
+     <link rel="stylesheet" href="css/bootstrap.min.css">
+</head>
+<body>
+     <div class="container">
+
+          {% include "header.html" %}
+          {% include "nav.html" %}
+          
+          <main>
+               <p>Username: {{user.name | title }}</p>
+               <p>User Id: {{user.id}}</p>
+
+               <p>{{ ["a","c","b"].join(" → ") }}</p>
+
+               <p> <a href={{"lorem ipsum".replace(" ","-")}}>{{ "lorem ipsum" }}</a> </p>
+
+          </main>
+
+           {% include "footer.html" %}
+     </div>
+</body>
+</html>
