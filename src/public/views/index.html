@@ -7,22 +7,45 @@
      <link rel="stylesheet" href="css/bootstrap.min.css">
 </head>
 <body>
-     <div class="container">
+<div class="container">
 
-          {% include "header.html" %}
-          {% include "nav.html" %}
+{% include "header.html" %}
+{% include "nav.html" %}
           
-          <main>
-               <p>Username: {{user.name | title }}</p>
-               <p>User Id: {{user.id}}</p>
+<main>
+<h2>Main</h2>
+<p>Username: {{user.name | title }}</p>
+<p>Reverse: {{user.name | reverse }}</p>
+<p>User Id: {{user.id}}</p>
 
-               <p>{{ ["a","c","b"].join(" → ") }}</p>
+<p>{{ ["a","c","b"].join(" → ") }}</p>
 
-               <p> <a href={{"lorem ipsum".replace(" ","-")}}>{{ "lorem ipsum" }}</a> </p>
+<p> <a href={{"lorem ipsum".replace(" ","-")}}>{{ "lorem ipsum" }}</a> </p>
 
-          </main>
+<!-- <p>{{cars}}</p> -->
 
-           {% include "footer.html" %}
-     </div>
+<h2>Cars from Array</h2>
+
+<ol>
+     {% for i in cars %}
+     <li>{{i}}</li>
+     {% endfor %}
+</ol>
+
+<h2>User from Object</h2>
+
+<ol>
+     {% for key,value in user %}
+     <li>{{key}} - {{value}}</li>
+     {% endfor %}
+</ol>
+
+{% if id %}
+     <p>ID: {{id}}</p>
+{% endif %}
+
+</main>
+{% include "footer.html" %}
+</div>
 </body>
 </html>
