@@ -1,6 +1,7 @@
 import express from 'express';
 import path from 'node:path';
 import nunjucks from 'nunjucks';
+import mongoose from './config/dao.js';
 
 const app=express();
 const port=process.env.PORT || 8080;

@@ -15,6 +15,7 @@
     "bootstrap": "^5.3.8",
     "chokidar": "^3.6.0",
     "express": "^5.1.0",
+    "mongoose": "^9.0.1",
     "nunjucks": "^3.2.4"
   },
   "devDependencies": {
