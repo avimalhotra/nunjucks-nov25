@@ -15,25 +15,11 @@
           
 <main>
 <h2>Main</h2>
-<p>Username: {{user.name | title }}</p>
-<p>Reverse: {{user.name | reverse }}</p>
-<p>User Id: {{user.id}}</p>
+<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Natus quos sunt hic aliquid eligendi eaque vitae soluta explicabo fugiat obcaecati nihil saepe blanditiis iste a, asperiores neque magnam, rerum nobis?</p>
 
-<p>{{ ["a","c","b"].join(" → ") }}</p>
 
-<p> <a href={{"lorem ipsum".replace(" ","-")}}>{{ "lorem ipsum" }}</a> </p>
 
-<!-- <p>{{cars}}</p> -->
-
-<h2>Cars from Array</h2>
-
-<ol>
-     {% for i in cars %}
-     <li>{{i}}</li>
-     {% endfor %}
-</ol>
-
-<h2>User from Object</h2>
+<!-- <h2>User from Object</h2>
 
 <ol>
      {% for key,value in user %}
@@ -43,7 +29,7 @@
 
 {% if id %}
      <p>ID: {{id}}</p>
-{% endif %}
+{% endif %} -->
 
 </main>
 {% include "footer.html" %}

@@ -3,7 +3,7 @@
 <head>
      <meta charset="UTF-8">
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <title>Contact US</title>
+     <title>All Cars</title>
      <link rel="stylesheet" href="css/bootstrap.min.css">
      <link rel="stylesheet" href="css/style.css">
 </head>
@@ -17,6 +17,18 @@
           <main>
                <h2>Main</h2>
                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolorem accusamus voluptatem, numquam aut autem eum. Modi culpa blanditiis adipisci tempore quam aut et corrupti, deserunt, animi alias facilis quidem fugit!</p>
+
+               <!-- <a href="/api/cars">Cars API</a> -->
+
+               <h3>Cars from database</h3>
+
+               <ol>
+                    {% for i in data %}
+                    <li>{{i.name}}</li>
+                    {% endfor %}
+               </ol>
+
+
           </main>
           
            {% include "footer.html" %}

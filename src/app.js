@@ -2,6 +2,12 @@ import express from 'express';
 import path from 'node:path';
 import nunjucks from 'nunjucks';
 import mongoose from './config/dao.js';
+import Car from './models/car.js';
+import Pin from './models/pincode.js';
+import cc from "./controllers/allcars.js";
+
+const db=mongoose.connection;
+
 
 const app=express();
 const port=process.env.PORT || 8080;
@@ -10,8 +16,8 @@ app.use(express.static(path.resolve('src/public')));
 app.use(express.static(path.resolve('node_modules/bootstrap/dist')));
 
 
-const env = new nunjucks.Environment();
-env.addFilter('reverse', (str) => str.split("").reverse().join() );
+// const env = new nunjucks.Environment();
+// env.addFilter('reverse', (str) => str.split("").reverse().join() );
 
 // configure
 nunjucks.configure(path.resolve("src/public/views"),{
@@ -22,7 +28,7 @@ nunjucks.configure(path.resolve("src/public/views"),{
 });
 
 app.get("/",(req,res)=>{
-     res.status(200).render("index.html",{title:"nunjucks", id:21, user:{name:"lorem", id:212}, cars:["swift","baleno","polo","brezza"] });
+     res.status(200).render("index.html",{title:"nunjucks"});
 });
 
 app.get("/about",(req,res)=>{
@@ -32,6 +38,18 @@ app.get("/about",(req,res)=>{
 app.get("/contact",(req,res)=>{
      res.status(200).render("contact.html",{title:"contact us"});
 });
+
+app.get("/cars/",(req,res)=>{
+
+     Car.find({},{_id:0,__v:0}).then(i=>{
+          res.status(200).render("cars.html",{title:"Cars Page",data:i});
+     }).catch(e=>{
+          res.status(200).render("cars.html",{title:"Cars Page",data:e});
+     });
+    
+})
+
+app.get("/api/cars",cc);
 
 
 /* wild card handler */
