@@ -4,8 +4,8 @@
      <meta charset="UTF-8">
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
      <title>All Cars</title>
-     <link rel="stylesheet" href="css/bootstrap.min.css">
-     <link rel="stylesheet" href="css/style.css">
+     <link rel="stylesheet" href="/css/bootstrap.min.css">
+     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
      <div class="container">
@@ -18,14 +18,13 @@
                <h2>Main</h2>
                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolorem accusamus voluptatem, numquam aut autem eum. Modi culpa blanditiis adipisci tempore quam aut et corrupti, deserunt, animi alias facilis quidem fugit!</p>
 
-               <!-- <a href="/api/cars">Cars API</a> -->
-
+           
                <h3>Cars from database</h3>
-
-               <ol>
-                    {% for i in data %}
-                    <li>{{i.name}}</li>
-                    {% endfor %}
+               <!-- <button class="btn btn-primary api">Fetch</button> -->
+               <ol class="fetchcars">
+                    <!-- {% for i in data %}
+                    <li>{{i.name | title}}</li>
+                    {% endfor %} -->
                </ol>
 
 
@@ -33,5 +32,6 @@
           
            {% include "footer.html" %}
      </div>
+<script src="/js/common.js"></script>     
 </body>
 </html>
