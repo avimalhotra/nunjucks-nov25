@@ -2,7 +2,8 @@
      <h1>{{title | title}}</h1>
      <form class="row g-3 align-items-center">
           <div class="col-auto"><label for="query" class="col-form-label">Search</label></div>
-          <div class="col-auto"><input type="search" id="query" class="form-control"></div>
+          <div class="col-auto position-relative"><input list="carsdata" type="search" id="query" class="form-control"> <ul id="carsdata" class="position-absolute"></ul></div>
           <div class="col-auto"><button class="btn btn-outline-primary">Search</button></div>
+         
      </form>
 </header>

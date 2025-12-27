@@ -13,7 +13,7 @@ const port=process.env.PORT || 8080;
 
 app.use(express.text());
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: false }));
 
 
 app.use(express.static(path.resolve('src/public')));
@@ -44,32 +44,27 @@ app.get("/contact",(req,res)=>{
 });
 
 app.get("/cars/",(req,res)=>{
-
      Car.find({},{_id:0,__v:0}).then(i=>{
           res.status(200).render("cars.html",{title:"Cars Page",data:i});
      }).catch(e=>{
           res.status(200).render("cars.html",{title:"Cars Page",data:e});
      });
-    
 });
+
 
 app.post("/search",(req,res)=>{
      
      const query=JSON.parse(req.body).q;
-
-     Car.find({name:new RegExp(query)},{_id:0,__v:0,type:0,price:0}).then(i=>{
-             console.log(i);
-          
+  
+     Car.find({name:new RegExp(query)},{_id:0,__v:0,type:0,price:0}).then(i=>{   
           if(i.length!=0){ 
-               return res.status(200).json(i);
+               return res.status(200).send(i);
           }
           else{
-              return res.status(200).json([{status:"error",reason:"no car found"}]);
-          }
-     
+               return res.status(200).send([{status:"error",name:"no car found"}]);
+          }     
      });
 
-     
 });
 
 app.get("/api/cars",cc);

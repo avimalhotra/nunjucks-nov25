@@ -23,21 +23,29 @@
 
      document.querySelector("header form input").addEventListener("input",function(){
           const car=this.value;
+          document.querySelector("#carsdata").innerHTML="";
           
           if(car.length>2){
-               fetch(`/search`,{method:"POST",body:JSON.stringify({q:car})}).then(i=>{
-                    i.json();
-               }).then(i=>{
-                    console.log(i);
-               }).catch(e=>{
-                    console.warn(e);
-               })
+               fetch(`/search`,{method:"POST",body:JSON.stringify({q:car})}).then(i=>i.json()).then(i=>{
+                    i.forEach(elem=>{
+                         document.querySelector("#carsdata").innerHTML+=`<li><a href=''>${elem.name}</a></li>`;
+                         
+                         document.querySelectorAll("#carsdata a").forEach(elem=>{
+                              elem.addEventListener("click",function(e){
+                              e.preventDefault();
+                              document.querySelector("header input").value=this.textContent;
+                         });
+                         });
+                    })
+               }).catch(e=>console.warn(e))
           }
-          
      });
 
-     document.querySelector("header form").addEventListener("input",function(e){
+     document.querySelector("header form").addEventListener("submit",function(e){
           e.preventDefault();
      });
+
+     
+     
 
 
