@@ -18,8 +18,7 @@
      }
 
      // fetchData();
-     if(document.querySelector("main .fetchcars")){fetchData()}
-
+     // if(document.querySelector("main .fetchcars")){fetchData()}
 
      document.querySelector("header form input").addEventListener("input",function(){
           const car=this.value;
@@ -44,8 +43,3 @@
      document.querySelector("header form").addEventListener("submit",function(e){
           e.preventDefault();
      });
-
-     
-     
-
-

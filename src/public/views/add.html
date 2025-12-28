@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>All Cars</title>
+     <link rel="stylesheet" href="/css/bootstrap.min.css">
+     <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+     <div class="container">
+
+          {% include "header.html" %}
+
+          {% include "nav.html" %}
+          
+          <main>
+               <h2>Main</h2>
+               <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolorem accusamus voluptatem, numquam aut autem eum. Modi culpa blanditiis adipisci tempore quam aut et corrupti, deserunt, animi alias facilis quidem fugit!</p>
+
+               <p>Back to <a href="/cars">All Cars</a></p>
+              
+               <h2>Add Car</h2>
+
+               <form action="/addcar" method="post">
+                    <label>Car Name: <input name="name" type="text" required pattern="[a-zA-Z0-9]{3,}"></label>
+                    <label>Body:
+                         <select name="type" required>
+                              <option value="" disabled selected>--Choose--</option>
+                              <option>hatchback</option>
+                              <option>sedan</option>
+                              <option>suv</option>
+                         </select>
+                    </label>
+                    <label>Price: <input type="text" name="price" required></label>
+                    <button class="btn btn-primary">Send</button>
+                    <span>{{msg}}</span>
+               </form>
+ 
+          </main>
+          
+           {% include "footer.html" %}
+     </div>
+<script src="/js/common.js"></script>     
+</body>
+</html>

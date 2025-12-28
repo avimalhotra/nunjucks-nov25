@@ -22,11 +22,10 @@
                <h3>Cars from database</h3>
                <!-- <button class="btn btn-primary api">Fetch</button> -->
                <ol class="fetchcars">
-                    <!-- {% for i in data %}
-                    <li>{{i.name | title}}</li>
-                    {% endfor %} -->
+                    {% for i in data %}
+                    <li><a href="/cars/{{i.name | replace(' ','-')}}">{{i.name | title}}</a></li>
+                    {% endfor %}
                </ol>
-
 
           </main>
           

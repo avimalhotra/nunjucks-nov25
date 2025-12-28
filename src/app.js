@@ -43,6 +43,30 @@ app.get("/contact",(req,res)=>{
      res.status(200).render("contact.html",{title:"contact us"});
 });
 
+function authMiddleware(req,res,next){
+     if(req.query.admin==="avi" && req.query.password==="avi2012"){
+          next();
+     }
+     else{
+          res.status(403).send("Access denied");
+     }
+}
+
+app.get("/add",authMiddleware,(req,res)=>{
+     res.status(200).render("add.html",{title:"Add Cars"});
+});
+
+app.post("/addcar/",(req,res)=>{
+     const{name,type,price}=req.body;
+
+     // console.log( name, type, price );
+
+     res.status(200).render("add.html",{title:"Add Cars",msg:"Car added successfully"});
+     
+})
+
+
+
 app.get("/cars/",(req,res)=>{
      Car.find({},{_id:0,__v:0}).then(i=>{
           res.status(200).render("cars.html",{title:"Cars Page",data:i});
@@ -50,6 +74,24 @@ app.get("/cars/",(req,res)=>{
           res.status(200).render("cars.html",{title:"Cars Page",data:e});
      });
 });
+
+app.get("/cars/:car",(req,res)=>{
+     const p=req.params.car;
+     const q=p.replace("-"," ");
+     // res.status(200).render("car.html",{title:p});
+      Car.find({name:q},{_id:0,__v:0}).then(i=>{
+     if(i.length){
+          res.status(200).render("car.html",{title:i[0].name, data:i});
+     }
+     else{
+          res.status(200).render("car.html",{title:"Car Not Found"});
+     }
+
+     }).catch(e=>{
+          res.status(200).render("car.html",{title:e});
+     });
+
+})
 
 
 app.post("/search",(req,res)=>{
@@ -67,6 +109,7 @@ app.post("/search",(req,res)=>{
 
 });
 
+/* api */
 app.get("/api/cars",cc);
 
 

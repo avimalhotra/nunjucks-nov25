@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>All Cars</title>
+     <link rel="stylesheet" href="/css/bootstrap.min.css">
+     <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+     <div class="container">
+
+          {% include "header.html" %}
+
+          {% include "nav.html" %}
+          
+          <main>
+               <h2>Main</h2>
+               <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolorem accusamus voluptatem, numquam aut autem eum. Modi culpa blanditiis adipisci tempore quam aut et corrupti, deserunt, animi alias facilis quidem fugit!</p>
+
+               <p>Back to <a href="/cars">All Cars</a></p>
+               <h3>{{ title | title }} car  details</h3>
+
+               <table class="table table-bordered">
+                    <thead>
+                         <tr>
+                              <th>Property</th>
+                              <th>Value</th>
+                         </tr>
+                    </thead>
+                    <tbody>
+                         <tr><th>Name</th><td>{{data[0].name | title}}</td></tr>
+                         <tr><th>Body Type</th><td>{{data[0].type | title}}</td></tr>
+                         <tr><th>Price</th><td>₹{{data[0].price}}</td></tr>
+                         <tr><th>On Road</th><td>₹{{ data[0].price + (data[0].price*0.15) }} <small>(estimate)</small> </td></tr>
+                    </tbody>
+               </table>
+ 
+          </main>
+          
+           {% include "footer.html" %}
+     </div>
+<script src="/js/common.js"></script>     
+</body>
+</html>
