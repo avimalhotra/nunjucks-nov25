@@ -12,11 +12,15 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^2.2.1",
     "bootstrap": "^5.3.8",
     "chokidar": "^3.6.0",
     "express": "^5.1.0",
+    "express-session": "^1.18.2",
     "mongoose": "^9.0.1",
-    "nunjucks": "^3.2.4"
+    "nunjucks": "^3.2.4",
+    "passport": "^0.7.0",
+    "passport-local": "^1.0.0"
   },
   "devDependencies": {
     "@types/node": "^24.10.1"

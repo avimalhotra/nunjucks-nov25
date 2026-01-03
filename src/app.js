@@ -4,24 +4,84 @@ import nunjucks from 'nunjucks';
 import mongoose from './config/dao.js';
 import Car from './models/car.js';
 import Pin from './models/pincode.js';
+import Admin from './models/admin.js';
 import cc from "./controllers/allcars.js";
+import session from 'express-session';
+import bodyParser from 'body-parser';
+
+import passport from 'passport';
+import local from 'passport-local';
+import { title } from 'node:process';
+const LocalStrategy=local.Strategy;
+
 
 const db=mongoose.connection;
 
 const app=express();
 const port=process.env.PORT || 8080;
 
-app.use(express.text());
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.set('trust proxy', 1); 
+  
+app.use(session({
+      secret:"session",
+      resave:false,
+      saveUninitialized:true,
+      cookie:{secure:false}
+}))
+
+
+app.use(bodyParser.json()); 
+  app.use(bodyParser.urlencoded({ extended: false })); 
+
+// app.use(express.text());
+// app.use(express.json());
+// app.use(express.urlencoded({ extended: false }));
 
 
 app.use(express.static(path.resolve('src/public')));
 app.use(express.static(path.resolve('node_modules/bootstrap/dist')));
 
 
-// const env = new nunjucks.Environment();
-// env.addFilter('reverse', (str) => str.split("").reverse().join() );
+/* passport configuration */
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+
+passport.serializeUser(function (user, done) {
+    done(null, user[0]._id);
+});
+passport.deserializeUser(function (user, next) {
+    next(null, user);
+});
+
+passport.use('local', new LocalStrategy((username, password, done) => {
+    
+    Admin.find({ username: username }).then(user=>{
+      if( user.length==0 ){
+          return done(null, null, { message: 'No user found!' });
+      }
+      else  if (user[0].password !== password) {
+          return done(null, null, { message: 'Password is incorrect!' });
+      }
+      else{
+          return done(null, user, null);
+      }
+      })
+
+  }
+));
+
+ function isAuthenticated(req, res, next) {
+      if (req.isAuthenticated()) {
+        next();
+      } else {
+        res.status(403).render('login.html',{title:"Forbidden",msg:"Forbidden"});
+      }
+  }
+  
+
+
 
 // configure
 nunjucks.configure(path.resolve("src/public/views"),{
@@ -39,27 +99,73 @@ app.get("/about",(req,res)=>{
      res.status(200).render("about.html",{title:"about us"});
 });
 
+app.get("/login",(req,res)=>{
+     res.status(200).render("login.html",{title:"Login admin"});
+});
+app.post("/login",(req,res)=>{
+     passport.authenticate('local',  (err, user, info) =>{
+          if (err) {
+            res.render('login.html', { error: err, });
+          } 
+          else if (!user) {
+            res.render('login.html', { errorMessage: info.message, title:"Invalid Credentials" });
+          } 
+          else {
+            //setting users in session
+            req.logIn(user, function (err) {
+              if (err) {
+               console.log(err);
+               
+                res.render('login.html', { error: err, title:"unable to login"   });
+              } else {
+               //  res.render('admin.html',{ name:user.name,title:"Admin",time:new Date().toLocaleString()});
+               res.redirect("/admin");
+               }
+            })
+          }
+        })(req, res);
+
+});
+
+app.get("/admin", isAuthenticated ,(req,res)=>{
+     res.status(200).render("admin.html",{title:"Admin",time:new Date().toLocaleString()});
+});
+ app.get('/logout', (req, res) => { 
+      if (req.session) {
+          req.session.destroy((err)=> {
+            if(err) {
+              return next(err);
+            } else {
+                res.clearCookie('connect.sid');
+                req.logout(()=>{});
+                if (!req.user) { 
+                    res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
+                }
+                res.render('login.html',{ msg:"Logout Successfully"});
+            }
+          });
+        }
+  });
+
 app.get("/contact",(req,res)=>{
      res.status(200).render("contact.html",{title:"contact us"});
 });
 
-function authMiddleware(req,res,next){
-     if(req.query.admin==="avi" && req.query.password==="avi2012"){
-          next();
-     }
-     else{
-          res.status(403).send("Access denied");
-     }
-}
+// function authMiddleware(req,res,next){
+//      if(req.query.admin==="avi" && req.query.password==="avi2012"){
+//           next();
+//      }
+//      else{
+//           res.status(403).send("Access denied");
+//      }
+// }
 
-app.get("/add",authMiddleware,(req,res)=>{
-     res.status(200).render("add.html",{title:"Add Cars"});
-});
+// app.get("/add",authMiddleware,(req,res)=>{
+//      res.status(200).render("add.html",{title:"Add Cars"});
+// });
 
 app.post("/addcar/",(req,res)=>{
      const{name,type,price}=req.body;
-
-     // console.log( name, type, price );
 
      res.status(200).render("add.html",{title:"Add Cars",msg:"Car added successfully"});
      
