@@ -3,7 +3,7 @@
 <head>
      <meta charset="UTF-8">
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <title>Admin Page</title>
+     <title>Login Page</title>
      <link rel="stylesheet" href="/css/bootstrap.min.css">
      <link rel="stylesheet" href="/css/style.css">
 </head>
@@ -15,11 +15,10 @@
           {% include "nav.html" %}
           
           <main>
-               <!-- <a class="float-end" href="/logout">Logout</a> -->
-                <form class="float-end" action="/logout" method="post"><button>Logout</button></form>
-               <h2>Hello {{name}}</h2>
-               <p>Login at : {{time}}</p>
+               <h2>Logout sucessfully</h2>
+               <a href="/login">Login again</a>
                
+
           </main>
           
            {% include "footer.html" %}

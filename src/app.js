@@ -74,6 +74,7 @@ passport.use('local', new LocalStrategy((username, password, done) => {
 
  function isAuthenticated(req, res, next) {
       if (req.isAuthenticated()) {
+        res.header('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
         next();
       } else {
         res.status(403).render('login.html',{title:"Forbidden",msg:"Forbidden"});
@@ -114,11 +115,9 @@ app.post("/login",(req,res)=>{
             //setting users in session
             req.logIn(user, function (err) {
               if (err) {
-               console.log(err);
-               
                 res.render('login.html', { error: err, title:"unable to login"   });
               } else {
-               //  res.render('admin.html',{ name:user.name,title:"Admin",time:new Date().toLocaleString()});
+               // res.render('admin.html',{ name:user[0].username, title:"Admin",time:new Date().toLocaleString()});
                res.redirect("/admin");
                }
             })
@@ -130,22 +129,34 @@ app.post("/login",(req,res)=>{
 app.get("/admin", isAuthenticated ,(req,res)=>{
      res.status(200).render("admin.html",{title:"Admin",time:new Date().toLocaleString()});
 });
- app.get('/logout', (req, res) => { 
-      if (req.session) {
-          req.session.destroy((err)=> {
-            if(err) {
-              return next(err);
-            } else {
-                res.clearCookie('connect.sid');
-                req.logout(()=>{});
-                if (!req.user) { 
-                    res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
-                }
-                res.render('login.html',{ msg:"Logout Successfully"});
-            }
-          });
-        }
+
+//  app.get('/logout', (req, res) => { 
+//       if (req.session) {
+//           req.session.destroy((err)=> {
+//             if(err) {
+//               return next(err);
+//             } else {
+//                 res.clearCookie('connect.sid');
+//                 req.logout(()=>{});
+//                 if (!req.user) { 
+//                     res.header('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0')
+//                     // res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
+//                 }
+//                 res.render('login.html',{ msg:"Logout Successfully"});
+//             }
+//           });
+//         }
+//   });
+
+
+app.post('/logout', function(req, res, next){
+  req.logout(function(err) {
+    if (err) { return next(err); }
+     else{
+          res.status(200).render("logout.html",{title:"Logout"});
+     }
   });
+});
 
 app.get("/contact",(req,res)=>{
      res.status(200).render("contact.html",{title:"contact us"});
