@@ -15,14 +15,20 @@
     "body-parser": "^2.2.1",
     "bootstrap": "^5.3.8",
     "chokidar": "^3.6.0",
+    "compression": "^1.8.1",
+    "cors": "^2.8.5",
     "express": "^5.1.0",
+    "express-mongo-sanitize": "^2.2.0",
+    "express-rate-limit": "^8.2.1",
     "express-session": "^1.18.2",
+    "helmet": "^8.1.0",
     "mongoose": "^9.0.1",
     "nunjucks": "^3.2.4",
     "passport": "^0.7.0",
     "passport-local": "^1.0.0"
   },
   "devDependencies": {
-    "@types/node": "^24.10.1"
+    "@types/node": "^24.10.1",
+    "cluster": "^0.7.7"
   }
 }

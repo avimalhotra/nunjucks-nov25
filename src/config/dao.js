@@ -13,5 +13,4 @@ db.on("error",err=>console.warn(err));
 
 db.once("open",function(){console.log("db open");})
 
-
 export default mongoose;
